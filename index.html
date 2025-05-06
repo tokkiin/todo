@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>発車標っぽいなにか</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>やることリスト</h1>
+      <div class="header-info">
+        <div class="type">種別</div>
+        <div class="time">時刻</div>
+        <div class="destination">行先</div>
+        <div class="platform">のりば</div>
+      </div>
+      <br>
+
+      <div class="departure-info">
+        <div class="type"><span id="type">--</span></div>
+        <div class="time"><span class="time" id="time">--:--</span></div>
+        <div class="destination"><span id="destination">--</span></div>
+        <div class="platform">
+          <span class="platform" id="platform">--</span>
+        </div>
+      </div>
+      <div class="departure-info">
+        <div class="type-info">停車駅</div>
+        <div class="time"><span class="time"></span></div>
+        <div class="destination">各駅にとまります</div>
+        <div class="platform">
+        </div>
+      </div>
+      <div class="departure-info">
+        <div class="type-info">ご案内</div>
+        <div class="time"><span class="time"></span></div>
+        <div class="destination"><div id="announcement"></div></div>
+        <div class="platform">
+        </div>
+      </div>
+
+      <div class="departure-info">
+        <div class="type"><span id="type2">--</span></div>
+        <div class="time"><span class="time" id="time2">--:--</span></div>
+        <div class="destination"><span id="destination2">--</span></div>
+        <div class="platform">
+          <span class="platform" id="platform2">--</span>
+        </div>
+      </div>
+      <div class="departure-info">
+        <div class="type"><span id="type3">--</span></div>
+        <div class="time"><span class="time" id="time3">--:--</span></div>
+        <div class="destination"><span id="destination3">--</span></div>
+        <div class="platform">
+          <span class="platform" id="platform3">--</span>
+        </div>
+      </div>
+      <div class="departure-info">
+        <div class="type"><span id="type4">--</span></div>
+        <div class="time"><span class="time" id="time4">--:--</span></div>
+        <div class="destination"><span id="destination4">--</span></div>
+        <div class="platform">
+          <span class="platform" id="platform4">--</span>
+        </div>
+      </div>
+      テキストボックスと「時刻表を適用する」ボタンを実装してユーザが↓みたいな感じで用意したデータをいい感じに表示したい<br>
+      時刻,種別,行先,のりば<br>
+      6:33,普通,東京,1<br>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
