@@ -168,3 +168,26 @@ h1 {
   font-size: 0.85em;
   color: #ccc;
 }
+
+.preview-time {
+  margin-top: 0.6em;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.preview-time input[type="time"] {
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+
+.preview-time button {
+  padding: 0.25em 0.5em;
+  background: #222;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 4px;
+}

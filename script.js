@@ -10,37 +10,59 @@ let timetable = [
 ];
 
 function updateDepartureInfo() {
-  // 現在の時刻を取得
-  const now = new Date();
+  // 現在の時刻を取得（プレビュー用関数があればそれを使う）
+  const now = (typeof window !== "undefined" && typeof window.__getNowDateForTimetable === "function")
+    ? window.__getNowDateForTimetable()
+    : new Date();
   const hours = now.getHours();
   const minutes = now.getMinutes();
   const currentTime = `${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
 
-  // 直近の電車の情報を取得
+  // 直近の電車の情報を取得（時刻文字列を「次に来る日時」に変換してソートする）
   let nextDepartures = [];
   if (Array.isArray(timetable) && timetable.length > 0) {
-    const currentTimeNum = `${hours}${minutes < 10 ? "0" : ""}${minutes}`;
-    nextDepartures = timetable
-      .filter((departure) => {
-        let departureTime = departure.時刻.replace(":", "");
-        let currentTimeNum = `${hours}${minutes < 10 ? "0" : ""}${minutes}`;
-
-        if (departureTime < 900 && hours >= 12) {
-          departureTime = parseInt(departureTime) + 2400;
+    const nowDate = (typeof window !== "undefined" && typeof window.__getNowDateForTimetable === "function")
+      ? window.__getNowDateForTimetable()
+      : new Date();
+    // 各時刻を「次に来る日時」に変換
+    const mapped = timetable
+      .map((departure) => {
+        const parts = String(departure.時刻).split(":").map((p) => parseInt(p, 10));
+        if (parts.length !== 2 || isNaN(parts[0]) || isNaN(parts[1])) return null;
+        let nextDate = new Date(
+          nowDate.getFullYear(),
+          nowDate.getMonth(),
+          nowDate.getDate(),
+          parts[0],
+          parts[1],
+          0,
+          0
+        );
+        if (nextDate.getTime() <= nowDate.getTime()) {
+          // 今日の時刻が既に過ぎていれば翌日にする
+          nextDate.setDate(nextDate.getDate() + 1);
         }
-        return parseInt(departureTime) > parseInt(currentTimeNum);
+        return { departure, nextMillis: nextDate.getTime() };
       })
+      .filter((m) => m !== null);
+
+    // 次発順に並べ替えて上位4件を取得
+    nextDepartures = mapped
+      .sort((a, b) => a.nextMillis - b.nextMillis)
+      .map((m) => m.departure)
       .slice(0, 4);
   }
 
   // HTML要素に表示
   let announcement = "";
-  if (nextDepartures.length > 0) {
+    if (nextDepartures.length > 0) {
     // 次発の時刻との差分を分単位で計算して案内を決定する
     const nextTimeStr = nextDepartures[0].時刻;
     const parts = String(nextTimeStr).split(":").map((p) => parseInt(p, 10));
     if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
-      const nowDate = new Date();
+      const nowDate = (typeof window !== "undefined" && typeof window.__getNowDateForTimetable === "function")
+        ? window.__getNowDateForTimetable()
+        : new Date();
       let nextDate = new Date(
         nowDate.getFullYear(),
         nowDate.getMonth(),
@@ -214,4 +236,36 @@ document.addEventListener("DOMContentLoaded", () => {
       reader.readAsText(f, "UTF-8");
     });
   }
+
+    // プレビュー用の時刻指定（テスト用）
+    const previewInput = document.getElementById("preview-time");
+    const clearPreviewBtn = document.getElementById("clear-preview-time");
+    let previewTimeValue = null; // "HH:MM" or null
+    if (previewInput) {
+      previewInput.addEventListener("input", (e) => {
+        previewTimeValue = e.target.value || null;
+        updateDepartureInfo();
+      });
+    }
+    if (clearPreviewBtn) {
+      clearPreviewBtn.addEventListener("click", () => {
+        if (previewInput) previewInput.value = "";
+        previewTimeValue = null;
+        updateDepartureInfo();
+      });
+    }
+
+    // 内部で使う現在日時取得関数（プレビュー時刻があればそれを優先）
+    window.__getNowDateForTimetable = function () {
+      if (previewTimeValue) {
+        const now = new Date();
+        const parts = previewTimeValue.split(":");
+        if (parts.length === 2) {
+          const hh = parseInt(parts[0], 10);
+          const mm = parseInt(parts[1], 10);
+          return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm, 0, 0);
+        }
+      }
+      return new Date();
+    };
 });
