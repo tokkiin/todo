@@ -85,6 +85,7 @@ function updateDepartureInfo() {
       if (departure.種別.includes("普通")) {
         typeElement.className = "type type-normal";
       } else if (
+        departure.種別.includes("準急") ||
         departure.種別.includes("快速") ||
         departure.種別.includes("急行")
       ) {

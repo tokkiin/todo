@@ -67,6 +67,13 @@ h1 {
 }
 
 .type-rapid {
+  background-color: greenyellow;
+  color: black;
+  border: 1px solid white;
+  padding: 0.2em;
+}
+
+.type-express {
   background-color: orange;
   color: black;
   border: 1px solid white;
