@@ -2,16 +2,18 @@
 <html>
   <head>
     <title>発車標っぽいなにか</title>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container">
-      <h1>やることリスト</h1>
+      <h1>発車標</h1>
+      <div class="clock">現在時刻<span id="current-time">--:--</span></div>
       <div class="header-info">
         <div class="type">種別</div>
         <div class="time">時刻</div>
         <div class="destination">行先</div>
-        <div class="platform">のりば</div>
+        <di標標</div>
       </div>
       <br>
 
@@ -24,16 +26,9 @@
         </div>
       </div>
       <div class="departure-info">
-        <div class="type-info">停車駅</div>
+        <div class="type"><div class="type-info">ご案内</div></div>
         <div class="time"><span class="time"></span></div>
-        <div class="destination">各駅にとまります</div>
-        <div class="platform">
-        </div>
-      </div>
-      <div class="departure-info">
-        <div class="type-info">ご案内</div>
-        <div class="time"><span class="time"></span></div>
-        <div class="destination"><div id="announcement"></div></div>
+        <div id="announcement"></div>
         <div class="platform">
         </div>
       </div>
@@ -62,9 +57,19 @@
           <span class="platform" id="platform4">--</span>
         </div>
       </div>
-      テキストボックスと「時刻表を適用する」ボタンを実装してユーザが↓みたいな感じで用意したデータをいい感じに表示したい<br>
-      時刻,種別,行先,のりば<br>
-      6:33,普通,東京,1<br>
+      <div class="timetable-editor">
+        <label for="timetable-input">時刻表（CSV）</label>
+        <div class="file-input">
+          <label for="timetable-file">CSVファイルを読み込む（UTF-8）</label>
+          <input type="file" id="timetable-file" accept=".csv,text/csv" />
+        </div>
+        <textarea id="timetable-input" rows="5" placeholder="時刻,種別,行先,のりば\n6:33,普通,東京,1"></textarea>
+        <div class="editor-actions">
+          <button id="apply-timetable">時刻表を適用する</button>
+          <button id="reset-timetable">ダミーデータに戻す</button>
+        </div>
+        <div class="editor-note">フォーマット: `時刻,種別,行先,のりば`（1行ごと） — ヘッダ行は省略可</div>
+      </div>
       </div>
     </div>
     <script src="script.js"></script>
