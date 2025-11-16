@@ -33,9 +33,10 @@ h1 {
 .type,
 .type-normal,
 .type-rapid,
-.type-limitedexpress {
+.type-limitedexpress,
+.type-info {
   width: 10em;
-  text-align: center;
+  text-align: left;
 }
 
 .header-info {
@@ -92,4 +93,78 @@ h1 {
   font-size: 2em;
   width: 100%;
   margin-bottom: 0.5em;
+}
+
+/* 現在時刻表示 */
+.clock {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+#current-time {
+  font-size: 1.6em;
+  color: cyan;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+}
+
+/* 時刻表エディタ */
+.timetable-editor {
+  width: 90%;
+  max-width: 800px;
+  margin-top: 1em;
+}
+
+.timetable-editor label {
+  display: block;
+  margin-bottom: 0.25em;
+}
+
+.timetable-editor textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: monospace;
+  font-size: 0.9em;
+  padding: 0.5em;
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 4px;
+}
+
+.file-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.file-input input[type="file"] {
+  background: #222;
+  color: #fff;
+  border: 1px solid #333;
+  padding: 0.25em 0.5em;
+  border-radius: 4px;
+}
+
+.editor-actions {
+  margin-top: 0.5em;
+}
+
+.editor-actions button {
+  margin-right: 0.5em;
+  padding: 0.4em 0.8em;
+  background: #222;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.editor-note {
+  margin-top: 0.5em;
+  font-size: 0.85em;
+  color: #ccc;
 }
